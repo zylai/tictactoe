@@ -45,15 +45,52 @@ grid2num()
 	esac
 }
 
+num2grid()
+{
+	case "$1" in
+		1)
+			printf "A1"
+			;;
+		2)
+			printf "A2"
+			;;
+		3)
+			printf "A3"
+			;;
+		4)
+			printf "B1"
+			;;
+		5)
+			printf "B2"
+			;;
+		6)
+			printf "B3"
+			;;
+		7)
+			printf "C1"
+			;;
+		8)
+			printf "C2"
+			;;
+		9)
+			printf "C3"
+			;;
+	esac
+}
+
 prompt()
 {
+	draw
 	printf "Choose your move: "
 	read choice
 	if [[ "$choice" =~ [a-cA-C][1-3] ]]
 		then
 			insert $choice
+			return 0
 		else
-			echo "Invalid input. Try again."
+			echo "Invalid input. Try again. Example: a1, b3, C2, etc."
+			echo "Choose your move: "
+			return 1
 		fi
 }
 
@@ -73,14 +110,16 @@ insert()
 		#declare $move="x"
 		return 0
 	else
-		echo "Invalid move. Try again."
+		echo "Invalid move. Square already occupied. Try again."
+		echo "Choose your move: "
 		return 1
 	fi
 }
 
 # 10 player wins
 # 20 opponent (computer) wins
-# 30 no winner
+# 30 no winner, moves still available
+# 40 no winner, board full
 check()
 {
 	board=`cat board.txt`
@@ -103,24 +142,39 @@ check()
 	then
 		return 20
 	else
-		return 30
+		if [ `echo $board | grep "-"` ]
+		then
+			return 30
+		else
+			return 40
+		fi
 	fi
 }
 
 echo "---------" > board.txt
-draw
-prompt
-check
-echo $?
-draw
-prompt
-check
-echo $?
-draw
-prompt
-check
-echo $?
-draw
+
+while [ true ]
+do
+	prompt
+	lastmove=`echo $?`
+	check
+	result=`echo $?`
+
+	if [[ "$result" == 10 ]]
+	then
+		echo "You win!"
+		printf "Play again? y|n: "
+		read replay
+		if [[ "$replay" == "y" ]]
+		then
+			echo "---------" > board.txt
+		else
+			echo "Bye!"
+			exit 0
+		fi
+	fi
+done
+
 
 
 #if [ $result -eq 10 ]
