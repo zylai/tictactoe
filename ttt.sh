@@ -49,7 +49,7 @@ prompt()
 {
 	printf "Choose your move: "
 	read choice
-	if [[ "$choice" =~ [a-zA-Z][1-3] ]]
+	if [[ "$choice" =~ [a-cA-C][1-3] ]]
 		then
 			insert $choice
 		else
