@@ -15,66 +15,30 @@ draw()
 grid2num()
 {
 	case "$1" in
-		a1|A1)
-			printf "1"
-			;;
-		a2|A2)
-			printf "2"
-			;;
-		a3|A3)
-			printf "3"
-			;;
-		b1|B1)
-			printf "4"
-			;;
-		b2|B2)
-			printf "5"
-			;;
-		b3|B3)
-			printf "6"
-			;;
-		c1|C1)
-			printf "7"
-			;;
-		c2|C2)
-			printf "8"
-			;;
-		c3|C3)
-			printf "9"
-			;;
+		a1|A1|1a|1A) printf "1";;
+		a2|A2|2a|2A) printf "2";;
+		a3|A3|3a|3A) printf "3";;
+		b1|B1|1b|1B) printf "4";;
+		b2|B2|2b|2B) printf "5";;
+		b3|B3|3b|3B) printf "6";;
+		c1|C1|1c|1C) printf "7";;
+		c2|C2|2c|2C) printf "8";;
+		c3|C3|3c|3C) printf "9";;
 	esac
 }
 
-num2grid()
+num2grid() 
 {
 	case "$1" in
-		1)
-			printf "A1"
-			;;
-		2)
-			printf "A2"
-			;;
-		3)
-			printf "A3"
-			;;
-		4)
-			printf "B1"
-			;;
-		5)
-			printf "B2"
-			;;
-		6)
-			printf "B3"
-			;;
-		7)
-			printf "C1"
-			;;
-		8)
-			printf "C2"
-			;;
-		9)
-			printf "C3"
-			;;
+		1) printf "A1";;
+		2) printf "A2";;
+		3) printf "A3";;
+		4) printf "B1";;
+		5) printf "B2";;
+		6) printf "B3";;
+		7) printf "C1";;
+		8) printf "C2";;
+		9) printf "C3";;
 	esac
 }
 
@@ -132,7 +96,7 @@ do
 			num_m1=$(($num-1)) 2>/dev/null
 			current=`cat board.txt 2>/dev/null | cut -c$num 2>/dev/null` 2>/dev/null
 
-			if [[ "$move" =~ [a-cA-C][1-3] && "$current" == "-" ]]
+			if [[ "$move" =~ [a-cA-C1-3][a-cA-C1-3] && "$current" == "-" ]]
 			then
 				#insert the move into database https://stackoverflow.com/a/24470008
 				updated_board=`sed -E "s/^(.{$num_m1})-/\1X/" board.txt`
@@ -153,7 +117,7 @@ do
 				10)
 					draw
 					echo "You win!"
-					printf "Play again? y|n: "
+					printf "\nPlay again? y|n: "
 					read replay
 					if [[ "$replay" == "y" || "$replay" == "Y" ]]
 					then
@@ -165,8 +129,8 @@ do
 					;;
 				40)
 					draw
-					echo "Tie"
-					printf "Play again? y|n: "
+					echo "Tie."
+					printf "\nPlay again? y|n: "
 					read replay
 					if [[ "$replay" == "y" || "$replay" == "Y" ]]
 					then
@@ -196,7 +160,7 @@ do
 					draw
 					echo "Opponent's move: `num2grid $square`"
 					echo "You lost."
-					printf "Play again? y|n: "
+					printf "\nPlay again? y|n: "
 					read replay
 					if [[ "$replay" == "y" || "$replay" == "Y" ]]
 					then
@@ -209,8 +173,8 @@ do
 				40)
 					draw
 					echo "Opponent's move: `num2grid $square`"
-					echo "Tie!"
-					printf "Play again? y|n: "
+					echo "Tie."
+					printf "\nPlay again? y|n: "
 					read replay
 					if [[ "$replay" == "y" || "$replay" == "Y" ]]
 					then
