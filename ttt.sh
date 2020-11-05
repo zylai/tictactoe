@@ -115,7 +115,7 @@ check()
 
 replay=y
 
-while [[ "$replay" == y ]]
+while [[ "$replay" == "y" || "$replay" == "Y" ]]
 do
 	echo "---------" > board.txt
 	result=30
@@ -151,7 +151,8 @@ do
 		then
 			case "$result" in
 				10)
-					echo "You win"
+					draw
+					echo "You win!"
 					printf "Play again? y|n: "
 					read replay
 					if [[ "$replay" == "y" || "$replay" == "Y" ]]
@@ -163,6 +164,7 @@ do
 					fi
 					;;
 				40)
+					draw
 					echo "Tie"
 					printf "Play again? y|n: "
 					read replay
@@ -191,8 +193,9 @@ do
 		then
 			case "$result" in
 				20)
+					draw
 					echo "Opponent's move: `num2grid $square`"
-					echo "You lost"
+					echo "You lost."
 					printf "Play again? y|n: "
 					read replay
 					if [[ "$replay" == "y" || "$replay" == "Y" ]]
@@ -204,8 +207,9 @@ do
 					fi
 					;;
 				40)
+					draw
 					echo "Opponent's move: `num2grid $square`"
-					echo "Tie"
+					echo "Tie!"
 					printf "Play again? y|n: "
 					read replay
 					if [[ "$replay" == "y" || "$replay" == "Y" ]]
