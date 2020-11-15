@@ -77,6 +77,19 @@ check()
 	fi
 }
 
+prompt_replay()
+{
+	printf "\nPlay again? y|n: "
+	read replay
+	if [[ "$replay" == "y" || "$replay" == "Y" ]]
+	then
+		return 1
+	else
+		echo "Bye!"
+		exit 0
+	fi
+}
+
 replay=y
 
 while [[ "$replay" == "y" || "$replay" == "Y" ]]
@@ -117,28 +130,12 @@ do
 				10)
 					draw
 					echo "You win!"
-					printf "\nPlay again? y|n: "
-					read replay
-					if [[ "$replay" == "y" || "$replay" == "Y" ]]
-					then
-						break
-					else
-						echo "Bye!"
-						exit 0
-					fi
+					prompt_replay || break
 					;;
 				40)
 					draw
 					echo "Tie."
-					printf "\nPlay again? y|n: "
-					read replay
-					if [[ "$replay" == "y" || "$replay" == "Y" ]]
-					then
-						break
-					else
-						echo "Bye!"
-						exit 0
-					fi
+					prompt_replay || break
 					;;
 			esac
 		fi
@@ -160,29 +157,13 @@ do
 					draw
 					echo "Opponent's move: `num2grid $square`"
 					echo "You lost."
-					printf "\nPlay again? y|n: "
-					read replay
-					if [[ "$replay" == "y" || "$replay" == "Y" ]]
-					then
-						break
-					else
-						echo "Bye!"
-						exit 0
-					fi
+					prompt_replay || break
 					;;
 				40)
 					draw
 					echo "Opponent's move: `num2grid $square`"
 					echo "Tie."
-					printf "\nPlay again? y|n: "
-					read replay
-					if [[ "$replay" == "y" || "$replay" == "Y" ]]
-					then
-						break
-					else
-						echo "Bye!"
-						exit 0
-					fi
+					prompt_replay || break
 					;;
 			esac
 		fi
